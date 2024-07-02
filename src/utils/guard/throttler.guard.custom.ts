@@ -16,7 +16,7 @@ export class ThrottlerGuardCustom extends ThrottlerGuard {
         const ttl: number = Math.floor(throttlerLimitDetail.ttl / 1000);
         const limit: number = throttlerLimitDetail.limit;
 
-        const key = this.generateKey(context, ip, '');
+        const key: string = this.generateKey(context, ip, '');
         const { totalHits } = await this.storageService.increment(key, ttl);
 
         const message = {

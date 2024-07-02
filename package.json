@@ -54,6 +54,7 @@
         "nest-winston": "^1.10.0",
         "nestjs-cls": "^4.3.0",
         "nestjs-firebase": "^10.5.0",
+        "nestjs-i18n": "^10.4.5",
         "nestjs-pino": "^4.1.0",
         "pino-socket": "^7.3.0",
         "reflect-metadata": "^0.2.0",

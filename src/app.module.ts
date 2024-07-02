@@ -2,10 +2,13 @@ import BullConfig from '@Config/bull.config';
 import ElasticSearchConfig from '@Config/elasticSearch.config';
 import firebaseConfig from '@Config/firebase.config';
 import ThrottlerConfig from '@Config/throttler.config';
+import { AllConfigType } from '@Config/types';
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ScheduleModule } from '@nestjs/schedule';
+import { HeaderResolver, I18nModule } from 'nestjs-i18n';
+import * as path from 'node:path';
 import AdminjsConfig from './config/adminjs.config';
 import AppConfig from './config/app.config';
 import LoggerConfig from './config/logger.config';
@@ -25,6 +28,35 @@ import { DynamicModules } from './dynamic/dynamic.module';
 
 @Module({
     imports: [
+        /**
+         * Cấu hình i18n -> Cho phép dự án đa ngôn ngữ
+         * fallbackLanguage -> Ngôn ngữ mặc định của ứng dụng
+         * loaderOptions => path -> đường dẫn đến thư mục chứa những file ngôn ngữ
+         *                  wath -> Cho phép theo dõi sự thay đổi trong file ngôn ngữ
+         * resolvers -> Mảng các resolvers để xác định các ngôn ngữ
+         *              HeaderResolver -> Xác định ngôn ngữ dựa trên header của request
+         *              useFactory -> Lấy tên ngôn ngữ từ cấu hình ứng dụng
+         */
+        I18nModule.forRootAsync({
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory: (configService: ConfigService<AllConfigType>) => ({
+                fallbackLanguage: configService.getOrThrow('app.language', { infer: true }),
+                loaderOptions: {
+                    path: path.join(__dirname, '/i18n/'),
+                    watch: true,
+                },
+            }),
+            resolvers: [
+                {
+                    inject: [ConfigService],
+                    use: HeaderResolver,
+                    useFactory: (configService: ConfigService<AllConfigType>) => [
+                        configService.getOrThrow('app.headerLanguage', { infer: true }),
+                    ],
+                },
+            ],
+        }),
         DatabaseModule,
         ScheduleModule.forRoot(),
         ConfigModule.forRoot({

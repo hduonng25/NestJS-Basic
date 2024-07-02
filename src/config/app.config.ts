@@ -9,5 +9,7 @@ export default registerAs<AppConfigType>(
         host: process.env.APP_HOST,
         port: Number(process.env.APP_PORT),
         prefix: process.env.APP_PREFIX,
+        language: process.env.APP_LANGUAGE,
+        headerLanguage: process.env.APP_HEADER_LANGUAGE,
     }),
 );

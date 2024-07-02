@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { validationOptions } from '@Utils/validations';
 import * as mongoose from 'mongoose';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { AppModule } from './app.module';
@@ -24,15 +25,7 @@ async function bootstrap() {
         infer: true,
     });
 
-    app.useGlobalPipes(
-        new ValidationPipe({
-            transform: true,
-            transformOptions: {
-                enableImplicitConversion: true,
-            },
-            disableErrorMessages: false,
-        }),
-    );
+    app.useGlobalPipes(new ValidationPipe(validationOptions));
 
     /**
      * Sử dụng để loại bỏ các trường bị đánh @Exclude khỏi data trả ra
