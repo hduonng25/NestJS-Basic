@@ -52,8 +52,19 @@ export class UserController {
     //     return Success.ok('hduong');
     // }
 
+    /**
+     * Demo queue
+     */
     @Get('queue')
     public async demoQueue() {
         return this.userService.demoQueue();
+    }
+
+    /**
+     * Demo dynamic
+     */
+    @Get('dynamic')
+    public async demoDynamic() {
+        return this.userService.demoDynamicModule();
     }
 }

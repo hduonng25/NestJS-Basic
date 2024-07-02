@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { Success } from '@Utils/result';
 import { Queue } from 'bull';
 import { MongoAbstractService } from 'src/utils/designPattern/service/mongo';
+import { DynamicService } from '../../dynamic/dynamic.service';
 import { ElkService } from '../../elk/elk.service';
 import { UserRepository } from './repository/user.repository';
 import { UsersModel } from './schema';
@@ -12,6 +13,7 @@ export class UserService extends MongoAbstractService<UsersModel> {
     constructor(
         private readonly userRepository: UserRepository,
         private readonly esService: ElkService,
+        private readonly dynamicService: DynamicService,
         @InjectQueue('user') private readonly audioQueue: Queue,
     ) {
         super(userRepository);
@@ -45,5 +47,13 @@ export class UserService extends MongoAbstractService<UsersModel> {
         } catch (err) {
             console.log(err);
         }
+    }
+
+    /**
+     * Sau khi gán dữ liệu ở UserModule và xử lý trong DynamicService
+     * -> Gọi ra để kiểm tra
+     */
+    public demoDynamicModule() {
+        return Success.ok(this.dynamicService.getOptions());
     }
 }

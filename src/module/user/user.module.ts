@@ -6,6 +6,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
 import { seconds, ThrottlerModule } from '@nestjs/throttler';
 import { ThrottlerGuardCustom } from '@Utils/guard';
+import { DynamicModules } from '../../dynamic/dynamic.module';
 import { ElkModule } from '../../elk/elk.module';
 import { UsersModel, UserSchema } from './schema';
 import { UserRepository } from './repository/user.repository';
@@ -14,6 +15,7 @@ import { UserController } from './user.controller';
 
 @Module({
     imports: [
+        DynamicModules.register({ someOptions: 'hduong dynamic module' }),
         BullModule.registerQueue({
             name: 'user',
         }),

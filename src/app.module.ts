@@ -21,6 +21,7 @@ import { RedisModule } from './redis/redis.module';
 import { WinstonLoggerModule } from './winston/winston.module';
 import { FirebaseModules } from './firebase/firebase.module';
 import { BullModules } from './bull/bull.module';
+import { DynamicModules } from './dynamic/dynamic.module';
 
 @Module({
     imports: [
@@ -48,6 +49,7 @@ import { BullModules } from './bull/bull.module';
         RedisModule,
         FirebaseModules,
         BullModules,
+        DynamicModules,
     ],
     controllers: [],
     providers: [
