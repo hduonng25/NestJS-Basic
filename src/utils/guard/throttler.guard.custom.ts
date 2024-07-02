@@ -1,7 +1,7 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import { ThrottlerLimitDetail } from '@nestjs/throttler/dist/throttler.guard.interface';
-import { ThrottlerExceptionCustom } from '@Utils/exception';
+import { ThrottlerExceptionCustom } from '@Utils/exceptions';
 import { Request } from 'express';
 
 @Injectable()

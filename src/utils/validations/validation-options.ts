@@ -1,5 +1,5 @@
 import { HttpStatus, ValidationError, ValidationPipeOptions } from '@nestjs/common';
-import { ApiException } from '@Utils/excepetions';
+import { ApiException } from 'src/utils/exceptions';
 
 /**
  * Khởi tạo cấu hình ValidationPipe

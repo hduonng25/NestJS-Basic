@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { seconds, SkipThrottle, Throttle } from '@nestjs/throttler';
 import { PaginationDto } from '@Utils/dto';
+import { BadReqException } from 'src/utils/exceptions';
 import { Success } from '@Utils/result';
 import { Result } from '@Utils/result/type';
 import { FindAllResponse } from '@Utils/types';
@@ -39,6 +40,9 @@ export class UserController {
     @Post()
     public async create(@Body() body: CreateUserDto) {
         const data: UsersModel = await this.userService.create(body);
+
+        if (!data) throw new BadReqException('Create faild');
+
         return Success.create(data);
     }
 
