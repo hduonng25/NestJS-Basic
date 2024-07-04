@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Query, Req } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { seconds, SkipThrottle, Throttle } from '@nestjs/throttler';
 import { PaginationDto } from '@Utils/dto';
@@ -9,21 +9,31 @@ import { FindAllResponse } from '@Utils/types';
 import { CreateUserDto } from './dto';
 import { UsersModel } from './schema';
 import { UserService } from './user.service';
+import { Request } from 'express';
+import { I18n, I18nContext } from 'nestjs-i18n';
 
 @Controller({
     path: 'users',
     version: '1',
 })
 export class UserController {
-    constructor(private readonly userService: UserService) {}
+    constructor(private readonly userService: UserService) {
+    }
 
     /**
      * Sử dụng @SkipThrottle() để loại bỏ việc giới hạn số Req cho một router nhất định
      * @param pagination
+     * @param req
+     * @param i18n
      */
     @SkipThrottle()
     @Get()
-    public async findAll(@Query() pagination: PaginationDto): Promise<Result> {
+    public async findAll(
+        @Query() pagination: PaginationDto,
+        @Req() req: Request,
+        @I18n() i18n: I18nContext,
+    ): Promise<Result> {
+        console.log(await i18n.t('common.demo'));
         const data: FindAllResponse<UsersModel> = await this.userService.findAll(
             pagination,
             {},

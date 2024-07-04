@@ -8,9 +8,9 @@ import {
     QueryOptions,
     Types,
 } from 'mongoose';
-import { PaginationDto } from '../../../dto';
-import { BaseSchema } from '../../../schema';
-import { FindAllResponse } from '../../../types';
+import { PaginationDto } from '@Utils/dto';
+import { BaseSchema } from '@Utils/schema';
+import { FindAllResponse } from '@Utils/types';
 import { MongoRepositoryInterface } from './mongo.repository.interface';
 
 export abstract class MongoAbstractRepository<T extends BaseSchema> implements MongoRepositoryInterface<T> {
@@ -49,7 +49,6 @@ export abstract class MongoAbstractRepository<T extends BaseSchema> implements M
         options?: QueryOptions<T>,
     ): Promise<FindAllResponse<T>> {
         const skip: number = (pagination.page - 1) * pagination.skip;
-
         const pipeline: PipelineStage[] = [
             { $match: condition ?? { deletedDate: null } },
             { $skip: skip },

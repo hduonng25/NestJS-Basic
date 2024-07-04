@@ -4,10 +4,11 @@ import { PaginationDto } from '../dto';
 
 @Injectable()
 export class PaginationMiddleware implements NestMiddleware {
-    constructor() {}
+    constructor() {
+    }
 
     use(req: Request, _: Response, next: NextFunction) {
-        const pagination = req.query as unknown as PaginationDto;
+        const pagination: PaginationDto = req.query as unknown as PaginationDto;
 
         pagination.page = !Number(pagination) ? 1 : Number(pagination.page);
         pagination.size = !Number(pagination) ? 10 : Number(pagination.size);

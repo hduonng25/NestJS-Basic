@@ -1,6 +1,6 @@
 import { AggregateOptions, FilterQuery, PipelineStage, ProjectionType, QueryOptions, Types } from 'mongoose';
-import { PaginationDto } from '../../../dto';
-import { FindAllResponse } from '../../../types';
+import { PaginationDto } from '@Utils/dto';
+import { FindAllResponse } from '@Utils/types';
 
 export interface MongoRepositoryInterface<T> {
     create(dto: T | Partial<T>): Promise<T>;

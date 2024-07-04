@@ -11,6 +11,7 @@ export class PaginationDto {
     @IsNumber()
     size: number;
 
+    @IsOptional()
     skip?: number;
 
     @IsOptional()
