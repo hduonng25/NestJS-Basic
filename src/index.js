@@ -12,3 +12,4 @@ const getPrice = (amount, name) => {
 
 const price = getPrice(200, 'blackFriday');
 console.log(price);
+
