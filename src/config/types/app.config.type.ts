@@ -3,6 +3,6 @@ export type AppConfigType = {
     host: string;
     port: number;
     prefix: string;
-    language: string
-    headerLanguage: string
+    language: string;
+    headerLanguage: string;
 };

@@ -1,14 +1,14 @@
 import { AllConfigType } from '@Config/types';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { validationOptions } from '@Utils/validations';
 import * as mongoose from 'mongoose';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { AppModule } from './app.module';
-import { HttpExceptionFilter } from '@Utils/exceptionFIlter';
+import { AllExceptionFilter } from '@Utils/exceptionFIlter';
 
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -27,7 +27,10 @@ async function bootstrap() {
     });
 
     app.useGlobalPipes(new ValidationPipe(validationOptions));
-    app.useGlobalFilters(new HttpExceptionFilter())
+    // app.useGlobalFilters(new HttpExceptionFilter())
+
+    const { httpAdapter } = app.get(HttpAdapterHost);
+    app.useGlobalFilters(new AllExceptionFilter(httpAdapter));
 
     /**
      * Sử dụng để loại bỏ các trường bị đánh @Exclude khỏi data trả ra
