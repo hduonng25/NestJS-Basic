@@ -8,6 +8,7 @@ import { validationOptions } from '@Utils/validations';
 import * as mongoose from 'mongoose';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { AppModule } from './app.module';
+import { HttpExceptionFilter } from '@Utils/exceptionFIlter';
 
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -26,6 +27,7 @@ async function bootstrap() {
     });
 
     app.useGlobalPipes(new ValidationPipe(validationOptions));
+    app.useGlobalFilters(new HttpExceptionFilter())
 
     /**
      * Sử dụng để loại bỏ các trường bị đánh @Exclude khỏi data trả ra
