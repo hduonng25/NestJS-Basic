@@ -35,6 +35,7 @@ export class UserController {
         @I18n() i18n: I18nContext,
     ): Promise<Result> {
         console.log(await i18n.t('common.demo'));
+
         const data: FindAllResponse<UsersModel> = await this.userService.findAll(
             pagination,
             {},
