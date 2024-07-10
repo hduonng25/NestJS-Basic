@@ -11,8 +11,7 @@ import { UsersModel } from './schema';
 import { UserService } from './user.service';
 import { Request } from 'express';
 import { I18n, I18nContext } from 'nestjs-i18n';
-import { User } from '@Utils/decorator';
-import { Auth } from './decorator';
+import { AuthDecorator, UserLogin } from '@Utils/decorator';
 
 @Controller({
     path: 'users',
@@ -80,7 +79,7 @@ export class UserController {
      * Demo dynamic
      */
     @Get('dynamic')
-    public async demoDynamic(@User() user: UsersModel) {
+    public async demoDynamic(@UserLogin() user: UsersModel) {
         console.log(user.name);
         return this.userService.demoDynamicModule();
     }
@@ -93,9 +92,7 @@ export class UserController {
      *      - Tham số phía sau là Value
      *      - Thường được sử dụng chung với Guard để phân, check quyền truy cập
      */
-    @Auth('admin')
-    @Get('deme-metadata')
-    public async demoMetadata() {
-
-    }
+    @AuthDecorator('admin', 'user')
+    @Get('demo-metadata')
+    public async demoMetadata() {}
 }
