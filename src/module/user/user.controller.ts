@@ -94,5 +94,7 @@ export class UserController {
      */
     @AuthDecorator('admin', 'user')
     @Get('demo-metadata')
-    public async demoMetadata() {}
+    public async demoMetadata() {
+        console.log("demo metadata");
+    }
 }
