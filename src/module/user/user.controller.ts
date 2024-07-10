@@ -97,6 +97,6 @@ export class UserController {
     public async demoMetadata() {
         console.log("demo metadata");
 
-        
+        console.log("a");
     }
 }
