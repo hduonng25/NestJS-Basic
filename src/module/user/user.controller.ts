@@ -96,5 +96,6 @@ export class UserController {
     @Get('demo-metadata')
     public async demoMetadata() {
         console.log("demo metadata");
+        
     }
 }
