@@ -29,8 +29,7 @@ async function bootstrap() {
     app.useGlobalPipes(new ValidationPipe(validationOptions));
     // app.useGlobalFilters(new HttpExceptionFilter())
 
-    const { httpAdapter } = app.get(HttpAdapterHost);
-    app.useGlobalFilters(new AllExceptionFilter(httpAdapter));
+    app.useGlobalFilters(new AllExceptionFilter(app.get(HttpAdapterHost)));
 
     /**
      * Sử dụng để loại bỏ các trường bị đánh @Exclude khỏi data trả ra

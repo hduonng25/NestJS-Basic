@@ -11,6 +11,8 @@ import { UsersModel } from './schema';
 import { UserService } from './user.service';
 import { Request } from 'express';
 import { I18n, I18nContext } from 'nestjs-i18n';
+import { User } from '@Utils/decorator';
+import { Auth } from './decorator';
 
 @Controller({
     path: 'users',
@@ -77,7 +79,22 @@ export class UserController {
      * Demo dynamic
      */
     @Get('dynamic')
-    public async demoDynamic() {
+    public async demoDynamic(@User() user: UsersModel) {
+        console.log(user.name);
         return this.userService.demoDynamicModule();
+    }
+
+    /**
+     * SetMetadata => Là một hàm trong NestJS để gán metadata(siêu dữ liệu) tuỳ chỉnh cho các thành phần như controller, service,...
+     * Metadata được set sẽ được sử dụng sau đó bởi Guard, Interceptor, Filter,...
+     * SetMetadata sẽ trả ra một Decoractor => Việc sử dụng SetMetadata giống như việc sử dụng Decoractor nhưng nó linh hoạt hơn
+     *      - Tham số đầu tiên là Key(Có thể hiểu như là tên của Decorator)
+     *      - Tham số phía sau là Value
+     *      - Thường được sử dụng chung với Guard để phân, check quyền truy cập
+     */
+    @Auth('admin')
+    @Get('deme-metadata')
+    public async demoMetadata() {
+
     }
 }
