@@ -1,4 +1,5 @@
 export type MongoConfigType = {
+    connect: boolean
     host: string;
     port: number;
     user: string;

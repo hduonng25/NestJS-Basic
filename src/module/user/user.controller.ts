@@ -11,12 +11,9 @@ import { UsersModel } from './schema';
 import { UserService } from './user.service';
 import { Request } from 'express';
 import { I18n, I18nContext } from 'nestjs-i18n';
-import { AuthDecorator, UserLogin } from '@Utils/decorator';
+import { RolesAccep, UserLogin } from '@Utils/decorator';
 
-@Controller({
-    path: 'users',
-    version: '1',
-})
+@Controller('users')
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
@@ -60,12 +57,12 @@ export class UserController {
     /**
      * Sử dụng Cron để chỉ định rằng đúng thời gian được cấu hình sẽ thực thi hàm này
      */
-    // @Cron(CronExpression.EVERY_5_SECONDS)
-    // @Put()
-    // public async demoCron() {
-    //     console.log('Cron 5 second');
-    //     return Success.ok('hduong');
-    // }
+    @Cron(CronExpression.EVERY_5_HOURS)
+    @Put()
+    public async demoCron() {
+        console.log('Cron 5 hour');
+        return Success.ok('hduong');
+    }
 
     /**
      * Demo queue
@@ -92,7 +89,7 @@ export class UserController {
      *      - Tham số phía sau là Value
      *      - Thường được sử dụng chung với Guard để phân, check quyền truy cập
      */
-    @AuthDecorator('admin', 'user')
+    @RolesAccep('admin', 'user')
     @Get('demo-metadata')
     public async demoMetadata() {
         console.log("demo metadata");

@@ -3,10 +3,7 @@ import { GroupConstant } from '@Utils/constant';
 import { CreateProductDto } from './dto';
 import { ProductService } from './product.service';
 
-@Controller({
-    path: 'product',
-    version: '1',
-})
+@Controller('product')
 export class ProductController {
     constructor(private readonly productService: ProductService) {}
 

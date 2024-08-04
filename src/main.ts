@@ -8,9 +8,15 @@ import { validationOptions } from '@Utils/validations';
 import * as mongoose from 'mongoose';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { AppModule } from './app.module';
-import { AllExceptionFilter } from '@Utils/exceptionFIlter';
+import { AllExceptionFilter } from 'src/utils/filter';
+import { SystemConfigure } from './system.configure';
+import { SYSTEM_PARAMS } from './system.params';
 
 async function bootstrap() {
+    await SystemConfigure();
+
+    const appVer = SYSTEM_PARAMS.APP_VER.split('.');
+
     const app = await NestFactory.create<NestExpressApplication>(AppModule, {
         bufferLogs: false,
         autoFlushLogs: true,
@@ -39,9 +45,10 @@ async function bootstrap() {
     // app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
     app.setGlobalPrefix(prefix);
+
     app.enableVersioning({
         type: VersioningType.URI,
-        defaultVersion: '1',
+        defaultVersion: appVer[0].toString(),
     });
 
     const config = new DocumentBuilder()

@@ -5,6 +5,7 @@ import { MongoConfigType } from './types';
 export default registerAs<MongoConfigType>(
     'mongodb',
     (): MongoConfigType => ({
+        connect: process.env.MONGO_CONNECT.toString() === 'true',
         host: process.env.MONGO_HOST,
         port: Number(process.env.MONGO_PORT),
         dbName: process.env.DB_NAME,

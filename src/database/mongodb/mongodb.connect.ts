@@ -10,9 +10,7 @@ export class MongodbConnect implements MongooseOptionsFactory {
     createMongooseOptions(): MongooseModuleOptions {
         try {
             return {
-                uri: this.configService.getOrThrow('mongodb.uri', {
-                    infer: true,
-                }),
+                uri: this.configService.getOrThrow('mongodb.uri', { infer: true }),
             };
         } catch (err) {
             Logger.error('Connect to mongodb failed', err);

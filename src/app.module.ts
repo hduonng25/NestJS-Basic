@@ -25,6 +25,7 @@ import { WinstonLoggerModule } from './winston/winston.module';
 import { FirebaseModules } from './firebase/firebase.module';
 import { BullModules } from './bull/bull.module';
 import { DynamicModules } from './dynamic/dynamic.module';
+import { SystemModule } from './module/system/system.module';
 
 @Module({
     imports: [
@@ -82,6 +83,7 @@ import { DynamicModules } from './dynamic/dynamic.module';
         FirebaseModules,
         BullModules,
         DynamicModules,
+        SystemModule,
     ],
     controllers: [],
     providers: [
@@ -89,6 +91,7 @@ import { DynamicModules } from './dynamic/dynamic.module';
             provide: APP_INTERCEPTOR,
             useClass: ResponseInterceptor,
         },
+
     ],
 })
 export class AppModule implements NestModule {

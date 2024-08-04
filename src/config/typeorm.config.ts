@@ -3,6 +3,7 @@ import 'dotenv/config';
 import { TypeOrmConfigType } from './types/typeorm.config.type';
 
 export const TypeOrmConfigOptions: TypeOrmConfigType = {
+    connnect: process.env.POSTGRES_CONNECT === 'true',
     type: process.env.TYPE_DB || 'postgres',
     host: process.env.HOST_DB,
     port: parseInt(process.env.PORT_DB),
