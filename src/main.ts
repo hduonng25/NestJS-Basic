@@ -12,10 +12,10 @@ import { AllExceptionFilter } from 'src/utils/filter';
 import { SystemConfigure } from './system.configure';
 import { SYSTEM_PARAMS } from './system.params';
 
-async function bootstrap() {
+async function bootstrap(): Promise<void> {
     await SystemConfigure();
 
-    const appVer = SYSTEM_PARAMS.APP_VER.split('.');
+    const _version_app: string = SYSTEM_PARAMS.APP_VER.split('.')[0].toString();
 
     const app = await NestFactory.create<NestExpressApplication>(AppModule, {
         bufferLogs: false,
@@ -48,7 +48,7 @@ async function bootstrap() {
 
     app.enableVersioning({
         type: VersioningType.URI,
-        defaultVersion: appVer[0].toString(),
+        defaultVersion: _version_app,
     });
 
     const config = new DocumentBuilder()

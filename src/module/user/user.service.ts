@@ -19,8 +19,7 @@ export class UserService extends MongoAbstractService<UsersModel> {
         super(userRepository);
         // this.esService.createIndex({
         //     index: UsersModel.name,
-        //     propreties: {
-        //
+        //     properties: {
         //         name: { type: 'text' },
         //         email: { type: 'text' },
         //         address: { type: 'text' },
@@ -39,7 +38,7 @@ export class UserService extends MongoAbstractService<UsersModel> {
             await this.audioQueue.add(
                 'first',
                 {
-                    name: 'hduong',
+                    name: 'duong',
                 },
                 { delay: 5000 },
             );

@@ -5,7 +5,7 @@ import ThrottlerConfig from '@Config/throttler.config';
 import { AllConfigType } from '@Config/types';
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ScheduleModule } from '@nestjs/schedule';
 import { HeaderResolver, I18nModule } from 'nestjs-i18n';
 import * as path from 'node:path';
@@ -26,6 +26,8 @@ import { FirebaseModules } from './firebase/firebase.module';
 import { BullModules } from './bull/bull.module';
 import { DynamicModules } from './dynamic/dynamic.module';
 import { SystemModule } from './module/system/system.module';
+import { AuthModule } from './module/auth/auth.module';
+import { JwtAuthGuard } from './module/auth/guard';
 
 @Module({
     imports: [
@@ -84,6 +86,7 @@ import { SystemModule } from './module/system/system.module';
         BullModules,
         DynamicModules,
         SystemModule,
+        AuthModule,
     ],
     controllers: [],
     providers: [
@@ -91,7 +94,10 @@ import { SystemModule } from './module/system/system.module';
             provide: APP_INTERCEPTOR,
             useClass: ResponseInterceptor,
         },
-
+        {
+            provide: APP_GUARD,
+            useClass: JwtAuthGuard,
+        },
     ],
 })
 export class AppModule implements NestModule {

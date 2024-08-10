@@ -15,7 +15,7 @@ import { UserController } from './user.controller';
 
 @Module({
     imports: [
-        DynamicModules.register({ someOptions: 'hduong dynamic module' }),
+        DynamicModules.register({ someOptions: 'duong dynamic module' }),
         BullModule.registerQueue({
             name: 'user',
         }),

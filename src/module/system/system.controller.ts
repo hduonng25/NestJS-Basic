@@ -1,5 +1,4 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { OnlyAdminGuard } from '@Utils/guard';
 import { SystemService } from './system.service';
 
 @Controller('system')
