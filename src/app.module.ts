@@ -17,7 +17,6 @@ import TypeormConfig from './config/typeorm.config';
 import { DatabaseModule } from './database/database.module';
 import { ProductModule } from './module/product/product.module';
 import { UserModule } from './module/user/user.module';
-import { ResponseInterceptor } from '@Utils/interceptor';
 import { PaginationMiddleware, RequestLogMiddleware } from '@Utils/middleware';
 import { ElkModule } from './elk/elk.module';
 import { RedisModule } from './redis/redis.module';
@@ -27,7 +26,6 @@ import { BullModules } from './bull/bull.module';
 import { DynamicModules } from './dynamic/dynamic.module';
 import { SystemModule } from './module/system/system.module';
 import { AuthModule } from './module/auth/auth.module';
-import { JwtAuthGuard } from './module/auth/guard';
 
 @Module({
     imports: [
@@ -89,16 +87,7 @@ import { JwtAuthGuard } from './module/auth/guard';
         AuthModule,
     ],
     controllers: [],
-    providers: [
-        {
-            provide: APP_INTERCEPTOR,
-            useClass: ResponseInterceptor,
-        },
-        {
-            provide: APP_GUARD,
-            useClass: JwtAuthGuard,
-        },
-    ],
+    providers: [],
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer): any {

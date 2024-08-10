@@ -1,8 +1,10 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { SystemService } from './system.service';
+import { RolesAccept } from '../auth/decorator';
+import { RoleConstant } from '@Utils/constant';
 
 @Controller('system')
-// @UseGuards(OnlyAdminGuard)
+@RolesAccept(RoleConstant.ADMIN)
 export class SystemController {
     constructor(private readonly systemService: SystemService) {}
 

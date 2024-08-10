@@ -1,7 +1,7 @@
 import { AllConfigType } from '@Config/types';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { HttpAdapterHost, NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory, Reflector } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { validationOptions } from '@Utils/validations';
@@ -11,6 +11,8 @@ import { AppModule } from './app.module';
 import { AllExceptionFilter } from 'src/utils/filter';
 import { SystemConfigure } from './system.configure';
 import { SYSTEM_PARAMS } from './system.params';
+import { JwtAuthGuard } from './module/auth/guard';
+import { ResponseInterceptor } from '@Utils/interceptor';
 
 async function bootstrap(): Promise<void> {
     await SystemConfigure();
@@ -34,6 +36,14 @@ async function bootstrap(): Promise<void> {
 
     app.useGlobalPipes(new ValidationPipe(validationOptions));
     // app.useGlobalFilters(new HttpExceptionFilter())
+
+    //Khởi tạo reflector bởi vì Class JwtAuthGuard yêu cầu truyền vào Reflector để lấy ra metadata
+    const reflector = app.get(Reflector);
+    app.useGlobalGuards(new JwtAuthGuard(reflector));
+
+    //Khởi tạo logger vì hàm tạo của Class ResponseInterceptor yêu cầu có logger truyền vào
+    const logger = app.get(Logger);
+    app.useGlobalInterceptors(new ResponseInterceptor(logger));
 
     app.useGlobalFilters(new AllExceptionFilter(app.get(HttpAdapterHost)));
 
@@ -63,7 +73,7 @@ async function bootstrap(): Promise<void> {
     mongoose.set('debug', configService.getOrThrow('app.environment', { infer: true }) === 'dev');
 
     await app.listen(port, host, () => {
-        Logger.log(`Listening on : ${host}:${port}`, 'NestApplication');
+        logger.log(`Listening on : ${host}:${port}`, 'NestApplication');
     });
 }
 

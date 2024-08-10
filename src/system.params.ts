@@ -3,5 +3,5 @@ type SystemParamsType = {
 };
 
 export const SYSTEM_PARAMS: SystemParamsType = {
-    APP_VER: ''
+    APP_VER: '',
 };

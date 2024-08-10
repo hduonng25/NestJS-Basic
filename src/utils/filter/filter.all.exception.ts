@@ -15,9 +15,9 @@ export class AllExceptionFilter implements ExceptionFilter {
         const response =
             exception instanceof HttpException
                 ? {
-                    ...exception.getResponse() as object,
-                    path: httpAdapter.getRequestUrl(ctx.getRequest())
-                }
+                      ...(exception.getResponse() as object),
+                      path: httpAdapter.getRequestUrl(ctx.getRequest()),
+                  }
                 : {
                       status: httpStatus,
                       timestamp: new Date().toISOString(),

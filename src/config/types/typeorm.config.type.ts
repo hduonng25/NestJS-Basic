@@ -1,5 +1,5 @@
 export type TypeOrmConfigType = {
-    connnect: boolean
+    connnect: boolean;
     type: string;
     host: string;
     port: number;

@@ -1,1 +1,1 @@
-export * from "./constant.auth"
+export * from './constant.auth';

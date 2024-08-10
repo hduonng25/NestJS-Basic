@@ -93,6 +93,6 @@ export class UserController {
     @RolesAccept('admin', 'user')
     @Get('demo-metadata')
     public async demoMetadata() {
-        console.log("demo metadata");
+        console.log('demo metadata');
     }
 }
