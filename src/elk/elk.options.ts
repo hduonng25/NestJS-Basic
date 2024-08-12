@@ -5,14 +5,14 @@ import { ElasticsearchModuleOptions, ElasticsearchOptionsFactory } from '@nestjs
 
 @Injectable()
 export class ElkOptions implements ElasticsearchOptionsFactory {
-    constructor(private readonly configSerice: ConfigService<AllConfigType>) {}
+    constructor(private readonly configService: ConfigService<AllConfigType>) {}
 
     createElasticsearchOptions(): Promise<ElasticsearchModuleOptions> | ElasticsearchModuleOptions {
         return {
-            node: this.configSerice.getOrThrow('elasticSearch.node', { infer: true }),
+            node: this.configService.getOrThrow('elasticSearch.node', { infer: true }),
             auth: {
-                username: this.configSerice.getOrThrow('elasticSearch.username', { infer: true }),
-                password: this.configSerice.getOrThrow('elasticSearch.password', { infer: true }),
+                username: this.configService.getOrThrow('elasticSearch.username', { infer: true }),
+                password: this.configService.getOrThrow('elasticSearch.password', { infer: true }),
             },
         };
     }
