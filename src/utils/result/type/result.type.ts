@@ -20,4 +20,4 @@ export type ErrorDetails = {
     message: string;
 };
 
-export type Result = SuccessType | ErrorType;
+export type Result = SuccessType | ErrorType 

@@ -32,7 +32,7 @@ export class SystemService {
         }
 
         return {
-            mess: 'Get system params successfuly',
+            mess: 'Get system params successfully',
         };
     }
 }

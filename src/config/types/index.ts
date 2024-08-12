@@ -7,11 +7,13 @@ import { AppConfigType } from './app.config.type';
 import { LoggerConfigType } from './logger.config.type';
 import { MongoConfigType } from './mongo.config.type';
 import { TypeOrmConfigType } from './typeorm.config.type';
+import { JwtConfigType } from './jwt.config.type';
 
 export * from './mongo.config.type';
 export * from './app.config.type';
 export * from './admin.config.type';
 export * from './logger.config.type';
+export * from './jwt.config.type';
 
 export type AllConfigType = {
     app: AppConfigType;
@@ -23,4 +25,5 @@ export type AllConfigType = {
     throttler: ThrottlerConfigType;
     firebase: FirebaseConfigType;
     bull: BullConfigType;
+    jwt: JwtConfigType
 };

@@ -14,7 +14,7 @@ export const firebaseConfigs: FirebaseConfigType = {
         measurementId: process.env.FIREBASE_MEASUREMENT_ID,
     },
 
-    firestoreDatabase: JSON.parse(process.env.FIBEBASE_FIRESTORE_ADMIN) as FirestoreDatabaseConfigType,
+    firestoreDatabase: JSON.parse(process.env.FIREBASE_FIRESTORE_ADMIN) as FirestoreDatabaseConfigType,
 };
 
 export default registerAs<FirebaseConfigType>('firebase', (): FirebaseConfigType => firebaseConfigs);

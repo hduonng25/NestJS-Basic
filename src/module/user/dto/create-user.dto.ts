@@ -1,23 +1,22 @@
-import { Optional } from '@nestjs/common';
 import { RoleConstant } from '@Utils/constant';
-import { Transform } from 'class-transformer';
+import { IsOptional } from 'class-validator';
 
 export class CreateUserDto {
-    @Optional()
+    @IsOptional()
     name: string;
 
-    @Transform((value) => value.obj.age.split(', '))
+    // @Transform((value) => value.obj.age.split(', '))
     age: number;
 
-    @Optional()
+    @IsOptional()
     email: string;
 
-    @Optional()
+    @IsOptional()
     role: RoleConstant;
 
-    @Optional()
+    @IsOptional()
     password: string;
 
-    @Optional()
+    @IsOptional()
     address: string;
 }

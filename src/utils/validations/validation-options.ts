@@ -7,7 +7,7 @@ import { ApiException } from 'src/utils/exceptions';
  * whitelist -> Loại bỏ các thuộc tính không được định nghĩa trong DTO class
  * exceptionFactory => Hàm tuỳ chỉnh để để khởi tạo exception khi có lỗi validation
  *                  -> Khởi tạo ApiException với 3 tham số: message, statusCode, param(Được khởi tạo trong ApiException)
- *                  -> errors.reduce 1 -> Tạo một Object chứa các lỗi, với key là tên thuộc tính, vlue là message
+ *                  -> errors.reduce 1 -> Tạo một Object chứa các lỗi, với key là tên thuộc tính, value là message
  *                  -> errors.reduce 2 -> Tạo một Object chứa tất cả các giá trị hợp lệ và không hợp lệ
  */
 export const validationOptions: ValidationPipeOptions = {

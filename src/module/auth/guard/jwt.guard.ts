@@ -3,6 +3,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { Observable } from 'rxjs';
 import { KEY_DECORATOR, KEY_GUARD } from '../constant';
 import { Reflector } from '@nestjs/core';
+import { Request } from 'express';
+import { JwtService } from '@nestjs/jwt';
 
 /**
  * Class này được sử dụng để xác thực cũng như bảo vệ ứng dụng
@@ -26,6 +28,11 @@ export class JwtAuthGuard extends AuthGuard(KEY_GUARD.JWT_GLOBAL) {
 
         if (isPublic) return true;
 
+        const request: Request = context.switchToHttp().getRequest();
+        const token: string = this.extractTokenFromHeader(request);
+
+        if (!token) return false;
+
         return super.canActivate(context);
     }
 
@@ -41,5 +48,10 @@ export class JwtAuthGuard extends AuthGuard(KEY_GUARD.JWT_GLOBAL) {
             throw err || new UnauthorizedException();
         }
         return user;
+    }
+
+    private extractTokenFromHeader(request: Request): string | undefined {
+        const [type, token] = request.headers.authorization?.split(' ') ?? [];
+        return type === 'Bearer' ? token : undefined;
     }
 }

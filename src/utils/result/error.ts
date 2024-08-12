@@ -1,8 +1,8 @@
 import { HttpStatus } from '@nestjs/common';
-import { ErrorType } from './type';
+import { Result } from './type';
 
 export class Errors {
-    public static error(data: { code: string; message: string }): ErrorType {
+    public static error(data: { code: string; message: string }): Result {
         return {
             status: HttpStatus.BAD_REQUEST,
             code: data.code ?? '',
@@ -10,7 +10,7 @@ export class Errors {
         };
     }
 
-    public static alreadyExist(data: { location: string; code: string }): ErrorType {
+    public static alreadyExist(data: { location: string; code: string }): Result {
         return {
             status: HttpStatus.BAD_REQUEST,
             code: data.code ?? '',
@@ -23,7 +23,7 @@ export class Errors {
         location: string;
         value?: string;
         message?: string;
-    }): ErrorType {
+    }): Result {
         return {
             status: HttpStatus.BAD_REQUEST,
             code: data.code ?? '',

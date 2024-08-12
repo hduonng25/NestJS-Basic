@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import process from 'process';
 import { SYSTEM_PARAMS } from './system.params';
 
-export const NAME_SYSTEM_PARAMS_MODEL: string = 'SyetemParams';
+export const NAME_SYSTEM_PARAMS_MODEL: string = 'SystemParams';
 
 export const systemParamsSchema = new mongoose.Schema({
     name: { required: true, type: String },

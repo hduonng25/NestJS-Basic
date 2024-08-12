@@ -5,7 +5,6 @@ import ThrottlerConfig from '@Config/throttler.config';
 import { AllConfigType } from '@Config/types';
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ScheduleModule } from '@nestjs/schedule';
 import { HeaderResolver, I18nModule } from 'nestjs-i18n';
 import * as path from 'node:path';
@@ -26,6 +25,7 @@ import { BullModules } from './bull/bull.module';
 import { DynamicModules } from './dynamic/dynamic.module';
 import { SystemModule } from './module/system/system.module';
 import { AuthModule } from './module/auth/auth.module';
+import JwtConfig from '@Config/jwt.config';
 
 @Module({
     imports: [
@@ -33,7 +33,7 @@ import { AuthModule } from './module/auth/auth.module';
          * Cấu hình i18n -> Cho phép dự án đa ngôn ngữ
          * fallbackLanguage -> Ngôn ngữ mặc định của ứng dụng
          * loaderOptions => path -> đường dẫn đến thư mục chứa những file ngôn ngữ
-         *                  wath -> Cho phép theo dõi sự thay đổi trong file ngôn ngữ
+         *                  watch -> Cho phép theo dõi sự thay đổi trong file ngôn ngữ
          * resolvers -> Mảng các resolvers để xác định các ngôn ngữ
          *              HeaderResolver -> Xác định ngôn ngữ dựa trên header của request
          *              useFactory -> Lấy tên ngôn ngữ từ cấu hình ứng dụng
@@ -72,6 +72,7 @@ import { AuthModule } from './module/auth/auth.module';
                 ThrottlerConfig,
                 firebaseConfig,
                 BullConfig,
+                JwtConfig
             ],
             envFilePath: ['.env'],
         }),

@@ -2,6 +2,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import { RoleConstant } from '@Utils/constant';
 import { BaseSchema } from '@Utils/schema';
+import { NextFunction } from 'express';
+import * as bcrypt from 'bcrypt';
 
 export type UserDocument = mongoose.HydratedDocument<UsersModel>;
 
@@ -24,3 +26,14 @@ export class UsersModel extends BaseSchema {
 }
 
 export const UserSchema = SchemaFactory.createForClass(UsersModel);
+
+UserSchema.pre('save', async function save(next: NextFunction) {
+    try {
+        if (!this.isModified('password')) return next();
+
+        this.password = await bcrypt.hash(this.password, 10);
+        return next();
+    } catch (error) {
+        return next(error);
+    }
+});

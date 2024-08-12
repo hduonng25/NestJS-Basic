@@ -12,7 +12,7 @@ import { UserService } from './user.service';
 import { Request } from 'express';
 import { I18n, I18nContext } from 'nestjs-i18n';
 import { UserLogin } from '@Utils/decorator';
-import { RolesAccept } from '../auth/decorator';
+import { Public, RolesAccept } from '../auth/decorator';
 
 @Controller('users')
 export class UserController {
@@ -46,6 +46,7 @@ export class UserController {
      * @param body
      */
     @Throttle({ default: { limit: 6, ttl: seconds(6) } })
+    @Public()
     @Post()
     public async create(@Body() body: CreateUserDto) {
         const data: UsersModel = await this.userService.create(body);

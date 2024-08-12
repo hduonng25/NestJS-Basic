@@ -17,7 +17,7 @@ import { ResponseInterceptor } from '@Utils/interceptor';
 async function bootstrap(): Promise<void> {
     await SystemConfigure();
 
-    const _version_app: string = SYSTEM_PARAMS.APP_VER.split('.')[0].toString();
+    const _version_app: string = SYSTEM_PARAMS.APP_VER.split('.')[0].toString() || '1';
 
     const app = await NestFactory.create<NestExpressApplication>(AppModule, {
         bufferLogs: false,
