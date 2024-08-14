@@ -7,7 +7,7 @@ import * as bcrypt from 'bcrypt';
 
 export type UserDocument = mongoose.HydratedDocument<UsersModel>;
 
-@Schema({ collection: 'users' , timestamps: true}) //=> danh dau timestamp nham de mongo tu cap nhat 2 truong createdAt va updatedAt
+@Schema({ collection: 'users' , timestamps: true}) //danh dau timestamp nham de mongo tu cap nhat 2 truong createdAt va updatedAt
 export class UsersModel extends BaseSchema {
     @Prop({ type: 'string', required: false })
     name: string;
