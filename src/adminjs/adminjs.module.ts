@@ -37,7 +37,7 @@ import { AdminJsResource } from './resource';
                     });
 
                     /**
-                     * Sử dụng databse connect vừa rồi để import reource và cấu hình
+                     * Sử dụng database connect vừa rồi để import resource và cấu hình
                      * */
                     return {
                         adminJsOptions: {

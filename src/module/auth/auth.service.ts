@@ -26,7 +26,7 @@ export class AuthService {
             now + this.configService.getOrThrow('jwt.accessTokenExpired', { infer: true }) * 1000;
         const refreshTokenExpires: number =
             now + this.configService.getOrThrow('jwt.refreshTokenExpired', { infer: true }) * 1000;
-
+       
         const [_accessToken, _refreshToken] = await Promise.all([
             //Token
             await this.jwtService.signAsync(
@@ -39,7 +39,7 @@ export class AuthService {
                     expiresIn: tokenExpires,
                 },
             ),
-
+            
             //Refresh token
             !isRefresh
                 ? undefined
@@ -54,7 +54,7 @@ export class AuthService {
                       },
                   ),
         ]);
-
+        
         return {
             _accessToken,
             _refreshToken,

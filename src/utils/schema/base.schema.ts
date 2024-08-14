@@ -6,7 +6,7 @@ export class BaseSchema {
     _id?: string;
 
     /**
-     * Sử dụng để transform dữ  liệu từ ObjectId thành dạng string
+     * Sử dụng để transform dữ liệu từ ObjectId thành dạng string
      */
     @Prop({
         required: false,
@@ -21,19 +21,20 @@ export class BaseSchema {
         type: Date,
         default: new Date(),
     })
-    createdDate: Date;
+    createdAt: Date;
 
     @Prop({
         required: false,
         type: Date,
         default: null,
     })
-    updatedDate: Date;
+    updatedAt: Date;
 
     @Prop({
         required: false,
         type: Date,
         default: null,
+        
     })
     deletedDate: Date;
 }
