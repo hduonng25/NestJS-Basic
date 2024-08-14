@@ -15,7 +15,7 @@ export class ProcessorUser {
         try {
             console.log(job.data);
             console.log('Process first');
-            return 'hdong';
+            return 'hduong';
         } catch (err) {
             console.log(err);
         }

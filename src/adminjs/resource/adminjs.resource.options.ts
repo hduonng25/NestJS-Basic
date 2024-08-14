@@ -27,7 +27,7 @@ export const CommonOptions = {
     },
 };
 
-export const UserReourceOptions = {
+export const UserResourceOptions = {
     /**
    - Sử dụng để chọn những trường hiển thị tại các màn tương ứng: Show, edit, create, filter
       listProperties: ['id', 'name', 'createdAt'],

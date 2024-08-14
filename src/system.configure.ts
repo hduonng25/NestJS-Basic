@@ -18,10 +18,10 @@ export async function SystemConfigure() {
     const data = await systemParamsModel.find().exec();
 
     console.log('Start assigning system data.');
-
+    
     for (let i = 0; i < data.length; i++) {
         console.log(`${data[i].name} data is being assigned => Done!`);
-
+        
         switch (SYSTEM_PARAMS.hasOwnProperty(data[i].name)) {
             case true:
                 SYSTEM_PARAMS[data[i].name] = data[i].value;
