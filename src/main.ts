@@ -13,6 +13,7 @@ import { SystemConfigure } from './system.configure';
 import { SYSTEM_PARAMS } from './system.params';
 import { JwtAuthGuard } from './module/auth/guard';
 import { ResponseInterceptor } from '@Utils/interceptor';
+import { JwtService } from '@nestjs/jwt';
 
 async function bootstrap(): Promise<void> {
     await SystemConfigure();

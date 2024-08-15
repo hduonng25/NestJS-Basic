@@ -1,10 +1,11 @@
-import { ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
+import { ExecutionContext, Injectable } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Observable } from 'rxjs';
 import { KEY_DECORATOR, KEY_GUARD } from '../constant';
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
-import { JwtService } from '@nestjs/jwt';
+import { Payload } from '@Utils/dto';
+import { BadReqException } from '@Utils/exceptions';
 
 /**
  * Class này được sử dụng để xác thực cũng như bảo vệ ứng dụng
@@ -28,30 +29,25 @@ export class JwtAuthGuard extends AuthGuard(KEY_GUARD.JWT_GLOBAL) {
 
         if (isPublic) return true;
 
-        const request: Request = context.switchToHttp().getRequest();
-        const token: string = this.extractTokenFromHeader(request);
-
-        if (!token) return false;
-
         return super.canActivate(context);
     }
 
-    handleRequest<TUser = any>(
-        err: any,
-        user: any,
-        info: any,
-        context: ExecutionContext,
-        status?: any,
-    ): TUser {
+    handleRequest<Payload>(_: any, user: Payload): Payload {
         //Phương thức này sẽ kiểm tra xem req có hợp lệ hay không (thời gian hiệu lực, ...)
-        if (err || !user) {
-            throw err || new UnauthorizedException();
-        }
+        this.checkUserLogin(user);
         return user;
     }
 
-    private extractTokenFromHeader(request: Request): string | undefined {
-        const [type, token] = request.headers.authorization?.split(' ') ?? [];
-        return type === 'Bearer' ? token : undefined;
+    private checkUserLogin(payload: Payload | Partial<Payload>): void {
+        if (!payload) {
+            throw new BadReqException('Token khong hop le');
+        }
+
+        const now: number = Date.now();
+        const expiredToken: number = payload?._expired;
+
+        if (now > expiredToken) {
+            throw new BadReqException('Token da het han');
+        }
     }
 }
