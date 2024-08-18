@@ -5,8 +5,6 @@ import { KEY_GUARD } from '../constant';
 import { ConfigService } from '@nestjs/config';
 import { AllConfigType } from '@Config/types';
 import { Payload } from '@Utils/dto';
-import { Request } from 'express';
-import { BadReqException } from '@Utils/exceptions';
 
 /**
  * PassportStrategy là một middleware nên là nó sẽ được gọi đến đầu tiên khi có Req truyền về
@@ -24,7 +22,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, KEY_GUARD.JWT_GLOBAL
         });
     }
 
-    public async validate(payload: Payload, req: Request): Promise<Payload> {
+    public async validate(payload: Payload): Promise<Payload> {
         return payload;
     }
 }

@@ -13,7 +13,7 @@ import { SystemConfigure } from './system.configure';
 import { SYSTEM_PARAMS } from './system.params';
 import { JwtAuthGuard } from './module/auth/guard';
 import { ResponseInterceptor } from '@Utils/interceptor';
-import { JwtService } from '@nestjs/jwt';
+import { I18nService } from 'nestjs-i18n';
 
 async function bootstrap(): Promise<void> {
     await SystemConfigure();
@@ -40,7 +40,8 @@ async function bootstrap(): Promise<void> {
 
     //Khởi tạo reflector bởi vì Class JwtAuthGuard yêu cầu truyền vào Reflector để lấy ra metadata
     const reflector = app.get(Reflector);
-    app.useGlobalGuards(new JwtAuthGuard(reflector));
+    const i18nService: I18nService = app.get(I18nService)
+    app.useGlobalGuards(new JwtAuthGuard(reflector, i18nService));
 
     //Khởi tạo logger vì hàm tạo của Class ResponseInterceptor yêu cầu có logger truyền vào
     const logger = app.get(Logger);

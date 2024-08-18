@@ -12,19 +12,15 @@ export class AllExceptionFilter implements ExceptionFilter {
         const httpStatus: HttpStatus =
             exception instanceof HttpException ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
         
-        const response =
-            exception instanceof HttpException
-                ? {
-                      ...(exception.getResponse() as object),
-                      path: httpAdapter.getRequestUrl(ctx.getRequest()),
-                  }
-                : {
-                      status: httpStatus,
-                      timestamp: new Date().toISOString(),
-                      path: httpAdapter.getRequestUrl(ctx.getRequest()),
-                      message: 'An error has occurred, please contact the administrator for more details.',
-                  };
-
+        const response = {
+            status: httpStatus,
+            message: 'Exception',
+            details: {
+                name: (exception as any).name,
+                message: (exception as any).message,
+            }
+        }
+        
         httpAdapter.reply(ctx.getResponse(), response, httpStatus);
     }
 }

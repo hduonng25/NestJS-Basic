@@ -3,9 +3,9 @@ import { AuthGuard } from '@nestjs/passport';
 import { Observable } from 'rxjs';
 import { KEY_DECORATOR, KEY_GUARD } from '../constant';
 import { Reflector } from '@nestjs/core';
-import { Request } from 'express';
 import { Payload } from '@Utils/dto';
 import { BadReqException } from '@Utils/exceptions';
+import { I18nService } from 'nestjs-i18n';
 
 /**
  * Class này được sử dụng để xác thực cũng như bảo vệ ứng dụng
@@ -15,7 +15,10 @@ import { BadReqException } from '@Utils/exceptions';
  */
 @Injectable()
 export class JwtAuthGuard extends AuthGuard(KEY_GUARD.JWT_GLOBAL) {
-    constructor(private reflector: Reflector) {
+    constructor(
+        private readonly reflector: Reflector,
+        private readonly i18nService: I18nService,
+    ) {
         super();
     }
 
@@ -40,14 +43,14 @@ export class JwtAuthGuard extends AuthGuard(KEY_GUARD.JWT_GLOBAL) {
 
     private checkUserLogin(payload: Payload | Partial<Payload>): void {
         if (!payload) {
-            throw new BadReqException('Token khong hop le');
+            throw new BadReqException(this.i18nService.translate('auth.token.inValid'));
         }
 
         const now: number = Date.now();
         const expiredToken: number = payload?._expired;
 
         if (now > expiredToken) {
-            throw new BadReqException('Token da het han');
+            throw new BadReqException(this.i18nService.translate('auth.token.expired'));
         }
     }
 }
